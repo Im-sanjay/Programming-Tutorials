@@ -1,0 +1,59 @@
+						start and create application in Django
+
+A Django project contains one or more applications which means we create application inside project folder
+
+syntax:
+==> create one application inside project
+* Run command python manage.py startapp  appname
+ex: Run command python manage.py startapp  course
+
+
+==> create multiple application inside project
+* Run command python manage.py startapp  appname
+ex: Run command python manage.py startapp  course
+	Run command python manage.py startapp  fees
+	Run command python manage.py startapp  result
+
+
+
+
+
+
+						Install application in our project
+
+Now after creating the application , we have to install this in our project otherwise application wont be recognized by django
+we install application in our project using settings.py file
+
+
+# setting.py
+
+# Application definition
+
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+]
+
+syntax:
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'application_name1',
+    'application_name2',
+
+]
+
+
+i.e 
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'course',
+    'fees',
+    'result',
+
+]
+
+

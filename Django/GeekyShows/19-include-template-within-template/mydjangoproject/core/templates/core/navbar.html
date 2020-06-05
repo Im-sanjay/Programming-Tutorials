@@ -1,0 +1,20 @@
+<nav>
+		<ul>
+			<!--  refer to the urlpattern to link the pages -->
+			<li><a href="/">home</a></li>
+
+
+
+			<!-- this will work if we change the url of the page from /about to /about-us in the urls.py file bcoz here we are using the name i.e aboutus to link the page --> 
+			<li><a href="{% url 'aboutus' %}">about</a></li> 
+
+		
+			<li><a href="{% url 'courseone' %}">new django course</a></li>
+
+		<!-- 	or we can write this like this both are right -->
+<!-- 
+				{% url 'courseone' as co %}
+			<li><a href="{{co}}">new django course</a></li> -->
+		</ul>
+		
+	</nav>

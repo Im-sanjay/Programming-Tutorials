@@ -1,0 +1,25 @@
+
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<title>{{title}}</title>
+	<link rel="stylesheet" href="{% static 'fees/css/style.css' %}"/>
+</head>
+<body>
+
+
+	<h2>{{cname}} fees: {{charge}}</h2>
+
+<img src="{% static 'fees/images/island.jpg' %}" alt="django" />
+<img src="{% get_static_prefix %}fees/images/island.jpg">
+
+<button type="button" onclick="display()"> click here </button>
+
+
+
+
+
+<script type="text/javascript" src="{% static 'fees/js/custom.js' %}"></script>
+</body>
+</html>

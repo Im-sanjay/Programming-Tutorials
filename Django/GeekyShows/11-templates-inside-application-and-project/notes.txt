@@ -1,0 +1,24 @@
+steps: for creating templates inside application and project both:)
+
+1. create django project: django-admin-startproject projectname
+2. create django application1 : python manage.py startapp applicationname1
+3. create django application2 : python manage.py startapp applicationname2
+4. add/install applications to django project using settings.py INSTALLED_APPS
+5. Create  templates folder inside each application
+6. check 'APP_DIRS' : true in settings.py
+	TEMPLATES = [ {'APP_DIRS' : True}]
+7. add templates directory which is inside root project folder, in settings.py
+
+	TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
+
+	TEMPLATES = [
+	{
+	'DIRS': [TEMPLATES_DIR],
+	}]
+
+8. create folder inside app/templates directory for template files
+9. create templates files inside app/templates/folder
+10. create template files inside templates folder which is inside root project folder
+11. write view function inside views.py file
+12. define url for view function of application using urls.py file
+13.  write template files code

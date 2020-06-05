@@ -1,0 +1,266 @@
+template inheritance allows you to build a base "skelton" template that contains all the common elements of your site and defines blocks that child temlates can override.
+
+the extends tag is used to inherit template.
+
+extends tag tells the template engine that this template "extends" another template
+
+when the template system evaluates this template , first it locates the parent let's assume., "base.html".
+at that point, the template engine will notice the block tags in base html and replace those blocks with  the contents of the child template
+
+
+_______________________________________________________________________________________________________
+								extends tags
+_______________________________________________________________________________________________________
+
+{% extends %} => used to inherit template. it tells the template engine that this template " extends" another template . It has no end tag
+
+syntax:
+{% entends 'parent_template_name' %}
+{% extends variable %}
+
+example:
+	{% extends "./base1.html %}
+	{% extends "../base12.html %}
+	{% extends "./my/base3.html %}
+	{% extends something %}
+
+
+
+_______________________________________________________________________________________________________
+						block tag
+_______________________________________________________________________________________________________
+
+{% block %} - the block tag is used to for overriding specific parts of a template
+
+syntax:
+{% block title %} . . . {% endblock %}
+{% block content %} . . . {% endblock blockname %}
+
+example:
+{% block title %} . . . {% endblock %}
+{% block content %} . . . {% endblock content %}
+
+
+
+
+
+_______________________________________________________________________________________________________								rules
+_______________________________________________________________________________________________________
+
+* if we use  {% extends %} in a template, it must be the first template tag in that template, otherwise template inseritence wont work 
+
+* more {% block %} tags in our base templates are better
+
+* child templates dont have to define all parent blocks, so we can fill in reasonable defaults in a number of blocks, then only define the ones we need later
+
+* we cant define multiple blocks tags with the same name in the same template
+
+* if we need to get the content of the block from the parent template, the {{block.super }} variable will do the trick 
+
+_________________________________________________________________________________________________
+				ceating basae/parent template and child template
+_____________________________________________________________________________________________________
+we write common code in the base template and create blocks for code which may vary page to page. later this template will be inherited by child templates and child template will override created blocks
+
+
+
+home.html 
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>home</title>
+	
+</head>
+<body>
+
+<h1>hello im home page</h1>
+
+</body>
+</html>
+
+--------------------------------------
+
+about.html 
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>about</title>
+	
+</head>
+<body>
+
+<h1>hello im about page</h1>
+
+</body>
+</html>
+
+----------------------------------------------------------------------------------------------
+
+base.html 
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{% block title %} {% endblock %}</title>
+	
+</head>
+<body>
+	{% block content %} {% endblock content %}
+
+
+</body>
+</html>
+
+-------------------------------------
+
+home.html
+
+{% extends 'base.html' %}
+
+{% block title %} home {% endblock%}
+
+{% block content %} 
+	hello i am home page 
+{% endblock content %}
+
+------------------------------------------
+
+about .html
+
+{% extends 'base.html' %}
+
+{% block title %} about {% endblock%}
+
+{% block content %} 
+	hello i am about page 
+{% endblock content %}
+
+---------------------------------------------------------------------------------------------
+
+base.html 
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{% block title %} other {% endblock %}</title>
+	
+</head>
+<body>
+	{% block content %} {% endblock content %}
+
+
+</body>
+</html>
+
+----------------------------------------
+
+home.html
+
+{% extends 'base.html' %}
+
+{% block title %} {{block.super}}  
+home {% endblock %}  			// block.super will inherit the title from the base.html i.e other 
+
+{% block content %} 
+	hello i am home page 
+{% endblock content %}
+
+
+
+
+home.html 
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title> other home </title>
+	
+</head>
+<body>
+
+<h1>hello im home page</h1>
+
+</body>
+</html>
+
+--------
+
+
+about.html
+
+{% extends 'base.html' %}
+
+
+{% block content %} 
+	hello i am about page 
+{% endblock content %}
+
+
+
+
+about.html 
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title> other </title>
+	
+</head>
+<body>
+
+<h1>hello im about page</h1>
+
+</body>
+</html>
+
+-------------------------------------------------------------------------------------------
+
+base.html 
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{% block title %} other {% endblock %}</title>
+	
+</head>
+<body>
+	{% block content %} {% endblock content %}
+	{% block somecontent1 %} {% endblock somecontent1 %}
+	{% block somecontent2 %} {% endblock somecontent2 %}
+	{% block somecontent3 %} {% endblock somecontent3 %}
+	{% block somecontent4 %} {% endblock somecontent4 %}
+
+
+</body>
+</html>
+
+-----------------------
+
+home.html
+
+{% extends 'base.html' %}
+
+{% block title %}  home {% endblock %}  			
+
+{% block content %} 
+	hello i am home page 
+{% endblock content %}
+
+--------------------
+
+about.html
+
+{% extends 'base.html' %}
+
+{% block title %}  about {% endblock %}  			
+
+{% block somecontent2 %} 
+	hello i am about page 
+{% endblock somecontent2 %}
+
+--------------------------------------------------------------------------------------------------
+
+
+

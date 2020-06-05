@@ -1,0 +1,15 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+<!--  the default core.css is not implemented in this file  -->
+<!-- for this file the course.css is linked to serve the .css file and overriding the default core.css -->
+{% block corecss%}
+	<link rel="stylesheet" type="text/css" href="{% static 'course/css/course.css' %}">
+{% endblock corecss%}
+
+
+{% block title %}courseinfo {% endblock title %}
+
+{% block content %} 
+	<h1>i am new courseinfo page </h1>
+{% endblock content %}

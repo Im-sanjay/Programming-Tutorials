@@ -1,0 +1,189 @@
+css , js, images, video files are considered as static files in django
+
+django provides django.contrib.staticfiles to help you manage them
+
+django.contrib.staticfiles collects static files from each of your applications into a single location that can easily be served in production
+
+
+____________________________________________________________________________________________________
+			create static folder and files
+____________________________________________________________________________________________________
+
+we create STATIC folder inside Root project the inside STATIC folder we create required folders
+which contains all ststic files 
+
+
+
+
+____________________________________________________________________________________________________
+					add static in settings.py
+____________________________________________________________________________________________________
+
+setting.py 
+
+STATIC_DIR = os.path.join(BASE_DIR, 'static')
+
+then create 
+STATIC_URL ='/static/'
+STATICFILES_DIRS = [STATIC_DIR] 
+
+
+______________________________________________________________________________________________________
+				use static files in template files
+______________________________________________________________________________________________________
+
+* load static files
+* reference static files
+
+
+<!DOCTYPE html>
+{% load static %}            // loading css
+<html>
+<head>
+	<title>info  page </title>
+	<link href = '{% static "css/style.css" %}'>
+	
+</head>
+<body>
+
+	<h1>fee {{fe}}</h1>
+	<img src = '{% static "images/test.jpg" %}'>
+
+</body>
+</html>
+
+
+
+_______________________________________________________________________________________________________
+							load template tags
+_____________________________________________________________________________________________________
+
+{% load module_name %}  --  it loads a custom template tag set
+
+example:
+	{% load emotags %}
+	{% load geek.mytags %}
+	{% load emotags geek.mytags %}
+
+	template would load all the tags and filters registered in emotags and mytags located in package geek
+
+you can also selectively load individual filters or tags from a library or module, usin the from argument 
+
+example:
+	{% load cry lol from emotags %}
+
+	the template tags/filters named cry and lol will be loaded from emotags
+
+
+
+_____________________________________________________________________________________________________
+				static template tags
+_____________________________________________________________________________________________________
+
+{% static filename %} -> tags is used to link the static files thatare saved in STATIC_ROOT. If the djang.contrib.staticfiles app is installed , the tag will serve files using url() method of the storage specified by STATICFILES_STORAGE
+
+syntax:
+	{% load static %}
+	{% static filename %}
+	{% static path/filename %}
+	{% static path/filename as variale %}
+
+example:
+	<link href = '{% static "style.css" %}'>
+	<link href = '{% static "css/style.css" %}'>
+	<img src = '{% static "images/test.jpg" %}'>
+
+
+
+____________________________________________________________________________________________________
+			get_static_prefix Template tag
+_____________________________________________________________________________________________________
+
+{% get_static_prefix %} -> more control over exactly where and how STATIC_URL  injected into the template 
+
+example:
+	{% load static %}
+	<img src="{% get_static_prefix %}images/text.jpg"
+
+
+	or
+
+
+
+	{% load static %}
+	{% get_static_prefix as STATIC_PREFIX %}
+	<img src="{ STATIC_PREFIX}images/text.jpg">
+	<img src="{ STATIC_PREFIX}images/text.jpg">
+
+________________________________________________________________________________________________
+
+STATIC_URL ->this is the url to use when referring to static file located in STATIC_ROOT. It must end in a slash ifset to a non-empty value
+
+example: "/static/"
+			"https://livecov19.com/"
+
+
+
+
+
+STATIC_ROOT -> this is absolute path to the directory where collectstatic will collect static files for deployment. it is by default none
+
+example:
+	"/var/www/livecov19.com/static"
+	os.path.join(BASE_DIR, 'static')
+
+
+
+
+
+STATICFILES_DIRS - defines the additional locations the staticfiles app will traverse if the FileSystemFinder is enabled, 
+e.g  if you use the collectstatic or findstatic management command or use the static file serving view. it is by default an empty list
+
+
+
+
+STATICFILES_DIRS =[
+	"/home/special.geek.com/geek/static",
+	"/home/geek.com/geek/static",
+	"/opt/webfiles/common",
+]
+
+
+
+
+STATICFILES_STORAGE - The file storage engine to use when collecting static files with the collectstatic management command
+
+default: 'django.contrib.staticfiles.storage.StaticFilesStorage'
+
+
+
+_____________________________________________________________________________________________________
+
+steps:)
+
+1. create django project: django-admin-startproject projectname
+2. create django application1 : python manage.py startapp applicationname1
+3. create django application2 : python manage.py startapp applicationname2
+4. add/install applications to django project using settings.py INSTALLED_APPS
+5. Create  templates folder inside each application
+6. check 'APP_DIRS' : true in settings.py
+	TEMPLATES = [ {'APP_DIRS' : True}]
+7. add templates directory which is inside root project folder, in settings.py
+
+	TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
+
+	TEMPLATES = [
+	{
+	'DIRS': [TEMPLATES_DIR],
+	}]
+
+8. create folder inside app/templates directory for template files
+9. create templates files inside app/templates/folder
+10. create template files inside templates folder which is inside root project folder
+11. create STATIC folder inside root project folder
+12. create css, js, images, video,etc folder inside static folder
+13. create static files inside css , js, images etc folder
+14. write views function inside views.py
+15. define url for view function of application using urls.py file
+16. write template file code
+17. write static file code

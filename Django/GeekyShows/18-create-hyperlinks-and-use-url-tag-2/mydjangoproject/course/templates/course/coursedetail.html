@@ -1,0 +1,16 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+<!-- here both core.css and course.css is implemented in this file as we are using block.super to in herit the parent .css file -->
+{% block corecss%}
+	{{block.super}}
+	<link rel="stylesheet" type="text/css" href="{% static 'course/css/course.css' %}">
+	
+{% endblock corecss%}
+
+
+{% block title %}courseinfo {% endblock title %}
+
+{% block content %} 
+	<h1>i am new courseinfo page </h1>
+{% endblock content %}

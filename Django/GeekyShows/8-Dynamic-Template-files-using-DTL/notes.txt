@@ -1,0 +1,84 @@
+
+
+___________________________________________________________________________________________________________
+					DYNAMIC TEMPLATE FILES
+___________________________________________________________________________________________________________
+
+Template file saperate the business logic and presentation logic from the application views.py file. Now we will write business logic in views.py file and presentation code in html file
+
+views.py will be responsible to process the templates files for this we will use render() function in views.py file
+
+
+
+
+views.py
+
+from django.shortcuts import render
+def function_name(request):
+	Dynamic Data , if else, any python code logic
+
+	return render(request, template_name, context = dict_name, content_type = MIME_type, status = None, using = None)
+
+
+
+
+
+
+
+views.pY
+
+def learn_django(request):
+	coursename = {'cname': 'Django'}
+	return render(request, 'course/courseone.html', context=coursename)
+
+	or 
+	return render(request, 'course/courseone.html', context=coursename,  {'cname': 'Django'})
+
+
+example:
+	def learn_django(request):
+		cname = 'Django'
+		duration = '4 months'
+		seats = 10
+		django_details = {'nm':cname, 'du':duration, 'st':seats}
+		return render(request, 'course/courseone.html', django_details)
+
+
+	
+
+	<body>
+		<h2> course name:{{nm}} duration:{{du}} and total seats: {{st}} </h2>
+	</body>
+
+
+
+
+
+render() function =>  It combines a given template with a given context dictionary and returns an HttpResponse object with that rendered text
+
+
+
+
+
+syntax:
+
+	return render(request, foldername/template_name, context = dict_name, content_type = MIME_type, status = None, using = None)
+
+
+example:
+	render(request, 'course/courseone.html', context=cname, content_type='application/xhtml+xml')
+
+
+
+
+
+	request => the request object used to generate this response
+	template_name => full name of the template to use a sequence of template names. If a sequence is given, the first template that exist will be used
+
+	context: a dictionary of values to add to the template context. By default, this is an empty dictionary. if a value in the dictionary is callable, the view will call it just before rendering the template
+
+	content-type: The MIME type to use for the resulting document . default to ' text/html'
+
+	status: status code for the response . default to 200
+
+	using - The NAME of a templatingengine to use for loading the template

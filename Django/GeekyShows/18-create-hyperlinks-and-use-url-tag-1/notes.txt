@@ -1,0 +1,71 @@
+_________________________________________________________________________________________________
+					url() tag 
+_________________________________________________________________________________________________
+
+{$ url $} -> returns an absolute path reference ( a url without the domain name ) matching a given view and optional parameters. any special characters in the resulting path will be encoded uring iri_to_uri().
+
+synatx:
+{% url 'urlname' %}
+{% url 'urlname' as var %}
+{% url 'urlname'arg1=value1 arg2=value2 %}
+{% url 'urlname' value1 value2 %}
+
+
+
+_________________________________________________________________________________________________
+					path()
+_________________________________________________________________________________________________
+path(route, view, kwargs=None , name=None) => it returs an element for inclusion in urlpatterns
+
+where,
+*  the route argument should be a string or gettext_lazy() that contains a URL pattern.
+	the string may contain angle brackets e.g (username> to capture part of the URL and send it as a keyword argument to the view. the angle brackets may include a converter specification like the int part of <int:id> which limits the characters matched and may also change the type of the variable passed to the view,
+
+	example:
+		<int:id> matches a string of decimal digits and converts the value to an int
+
+* the view argument is a view function or result of as_view() for class-based views.
+it can also be an django.urls.include()
+
+* the kwargs argument allows you to pass additioanl arguments to the view function or method. it swhould be a dictionary
+
+* name is used to perform URL reversing
+
+
+urls.py
+urlpatterns = [
+	path(route,view, kwargs=None, name=None)
+]
+
+
+urls.py
+urlpatterns = [
+	path('learndj/' , views.learn_Django ,{'check' : 'OK'} , name='learn_django'),
+]
+
+
+
+
+urlpatterns = [
+	path('about/' , views.about ),
+]
+
+< a href="/about">about</a>
+
+
+
+----------------------------
+< a href="{{ab}}">about</a>
+
+def about(request):
+return render(request, 'core/about.html', {'ab':'/about'})
+
+
+---------------------------------
+
+{% url 'aboutus' as abc %}     or  < a href="{% url 'aboutus' %}">about</a>
+<a href = "{{abc}}">about</a>
+
+urlpatterns = [
+	path('about/' , views.about, name= 'aboutus'),
+]

@@ -1,0 +1,213 @@
+
+
+
+we can define multiple url for one view function . means we can access same view function with multiple urls
+example:
+
+urls.py
+from course import views
+urlpatterns = [
+    path('learn/', views.django_learn),
+    path('course/', views.django_learn),
+]
+
+output:
+http://localhost:5000/learn/
+http://localhost:5000/course/ 
+shows the same result ( same page )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+									Function Based Views
+
+views.py (course)
+
+from django.http import HttpResponse
+def learn_django(request):
+    return HttpResponse('HELLO from course application')
+
+
+
+views.py (fees)
+
+from django.http import HttpResponse
+def fees_django(request):
+    return HttpResponse('300')
+
+
+
+
+# URL Pattern
+
+urls.py
+from course import views
+from fees import views
+
+urlpatterns = [
+    path('fees/', views.fees_django),
+    path('course/', views.learn_django),
+]
+
+since both fees and course application have views.py common , there will be a conflict , so best way to solve is to give names to the views 
+
+i.e 
+	from course import views as cv
+	from fees import views as fv
+
+	urlpatterns = [
+	    path('fees/', fv.fees_django),
+	    path('course/', cv.learn_django),
+	]
+
+
+
+
+
+--------------	another way to solve the conflict issue -----------------------------
+urls.py 
+	from course.views import learn_django
+	from fees.views import fees_django
+
+	urlpatterns = [
+		    path('fees/', fees_django),
+		    path('course/', learn_django),
+		]
+
+
+
+output:
+http://localhost:8000/course/   =>  HELLO from course application
+http://localhost:8000/fees      => 300
+http://localhost:8000/          => HELLO from course application
+
+
+
+
+
+
+
+______________________________________________________________________________________________________________
+										Include()
+______________________________________________________________________________________________________________
+
+A function that takes a full python import path to another URL conf module taht should be 'included' in this place
+optionally , the application namespace and instance namespace where the entries will be included into can also be specified
+
+include() also accepts as an argument either an iterable that returns URL patterns or 2 tuple containing such iterable plus the names of the application namespace
+
+urlpatterns can "include " other URL conf modules
+
+syntax:
+	include(module, namespace=None)
+	or include(pattern_list)
+	or include((pattern_list, app_namespace), namespace=None)
+
+where ,
+	module - URL conf module ( or module name)
+	namespace(str) - instance namespace for the URL entries being included
+	pattern_list  - Iterable of path() and/or re_path() instances
+	app_namespace(str) -application namespace for the URL entries being included
+
+
+example:
+	from django.urls import include, path
+	urlpatterns = [
+		    path('cor/', include('course.urls')),
+		]
+
+
+--------- or  -------- 
+	urlpatterns = [
+		    path('cor/', include([
+		      	path('fees/', fees_django),
+		   		path('course/', learn_django),
+		    ])),
+		]
+
+----- or -----------
+	urlpatterns = [
+		    path('fees/', fees_django),
+		    path('course/', learn_django),
+		]
+
+	urlpatterns = [
+		path('cor/', include(otherpatterns)),
+	]
+
+
+
+-------------------- write URL Pattern inside Application ----------------------------------------
+* create an urls.py file inside each application ( in case multiple application )
+* write all url pattern related to application , in urls.py file available inside application
+* include application's urls.py file inside project's urls.py file
+
+
+
+
+
+
+views.py in application folder
+
+from django.http import HttpResponse
+def learn_django(request):
+    return HttpResponse('HELLO from course application')
+
+
+def fees_django(request):
+    return HttpResponse(300')
+
+
+
+
+
+
+
+
+urls.py in application folder 
+
+from course import views 
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('course/', views.learn_django),
+    path('fees', views.fees_django),
+
+]
+
+
+
+urls.py in project folder
+from django.urls import path , include
+urlpatterns = [
+	path('cor/', include('course.urls')),
+	]
+
+	course -> package name
+	urls -> module name
+
+
+output:
+	http://localhost:8000/cor/course
+	http://localhost:8000/cor/fees
+
+
+
+
+

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<title>{{title}}</title>
+	<link rel="stylesheet" href="{% static 'course/css/style.css' %}"/>
+</head>
+<body>
+
+<h1>start learning {{cname}}</h1>
+
+<img src="{% static 'course/images/test.jpg' %}" alt="django" />
+<img src="{% get_static_prefix %}course/images/test.jpg">
+
+<button type="button" onclick="display()"> click here </button>
+
+
+
+
+
+<script type="text/javascript" src="{% static 'course/js/custom.js' %}"></script>
+</body>
+</html>

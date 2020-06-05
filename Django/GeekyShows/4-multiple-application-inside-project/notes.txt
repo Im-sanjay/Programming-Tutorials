@@ -1,0 +1,62 @@
+
+									Function Based Views
+
+views.py (course)
+
+from django.http import HttpResponse
+def learn_django(request):
+    return HttpResponse('HELLO from course application')
+
+
+
+views.py (fees)
+
+from django.http import HttpResponse
+def fees_django(request):
+    return HttpResponse('300')
+
+
+
+
+# URL Pattern
+
+urls.py
+from course import views
+from fees import views
+
+urlpatterns = [
+    path('fees/', views.fees_django),
+    path('course/', views.learn_django),
+]
+
+since both fees and course application have views.py common , there will be a conflict , so best way to solve is to give names to the views 
+
+i.e 
+	from course import views as cv
+	from fees import views as fv
+
+	urlpatterns = [
+	    path('fees/', fv.fees_django),
+	    path('course/', cv.learn_django),
+	]
+
+
+
+
+
+--------------	another way to solve the conflict issue -----------------------------
+urls.py 
+	from course.views import learn_django
+	from fees.views import fees_django
+
+	urlpatterns = [
+		    path('fees/', fees_django),
+		    path('course/', learn_django),
+		]
+
+
+
+output:
+http://localhost:8000/course/   =>  HELLO from course application
+http://localhost:8000/fees      => 300
+http://localhost:8000/          => HELLO from course application

@@ -1,0 +1,87 @@
+                                                URL Dispatcher
+
+To design URLS for app, you create a python module informally named urls.py. This module is pure python code and is a mapping between URL path expressions to view functions
+
+urls.py
+
+urlpatterns = [
+    path(route, view, kwarges= None, name=None),
+]
+
+
+
+urls.py
+
+urlpatterns = [
+    path('learn/', views.django_learn),
+]
+
+
+
+
+
+
+
+
+
+
+
+                                                URL Patter inside Project
+
+urls.py is used tto defie url pattern attached with the application or view of application or view function of application
+
+urls.py is located inside inner project folder not inside application folder . Defined url name will be used by application user to get response from the application or view function of the application
+
+steps:
+1. open urls.py
+2. import module ( python file ) of the application
+3. write url name and map it with function
+
+ex:
+from course import views
+urlpatterns = [
+    path('learn/', views.django_learn),
+]
+
+
+* django_learn function is written in the applications views.py file
+
+
+
+# Single application with single function
+
+views.py
+from django.http import HttpResponse
+def learn_django(request):
+    return HttpResponse('HELLO DJANGO')
+
+
+urls.py
+from course import views
+urlpatterns = [
+    path('learn/', views.django_learn),
+]
+
+
+
+
+
+we can define multiple url for one view function . means we can access same view function with multiple urls
+example:
+
+urls.py
+from course import views
+urlpatterns = [
+    path('learn/', views.django_learn),
+    path('course/', views.django_learn),
+]
+
+output:
+http://localhost:5000/learn/
+http://localhost:5000/course/ 
+shows the same result ( same page )
+
+
+
+
+

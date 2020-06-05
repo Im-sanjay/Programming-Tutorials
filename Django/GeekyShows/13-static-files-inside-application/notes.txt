@@ -1,0 +1,39 @@
+___________________________________________________________________________________________________
+						add static in settings.py
+_____________________________________________________________________________________________________
+
+settings.py
+TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
+
+	TEMPLATES = [
+	{
+	'DIRS': [TEMPLATES_DIR],
+	}]
+
+STATIC_URL = '/static/''
+
+
+ 
+______________________________________________________________________________________________________
+				use static files in template files
+______________________________________________________________________________________________________
+
+* load static files
+* reference static files
+
+
+<!DOCTYPE html>
+{% load static %}            // loading css
+<html>
+<head>
+	<title>info  page </title>
+	<link href = '{% static "course/css/style.css" %}'>
+	
+</head>
+<body>
+
+	<h1>fee {{fe}}</h1>
+	<img src = '{% static "course/images/test.jpg" %}'>
+
+</body>
+</html>

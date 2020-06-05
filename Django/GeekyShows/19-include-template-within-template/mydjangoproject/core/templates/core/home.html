@@ -1,0 +1,18 @@
+{% extends 'core/base.html' %}
+
+{% block title %}home{% endblock title %}
+
+{% block content %} 
+	<h1>i am new home page  {{d}}</h1>
+
+	<h2>Top Courses</h2>
+
+	{% include 'core/topcourses.html' with p='PHP' %}
+
+	<br>
+{% include 'core/topcourses.html' with p='ruby' only %}
+<br>
+{% include 'core/topcourses.html' with p='julia' only %}
+<br>
+{% include 'core/topcourses.html' with p='c++'  %}
+{% endblock content %}
